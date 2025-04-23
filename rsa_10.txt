@@ -1,0 +1,135 @@
+2 large prime nos p & q
+n=p*q
+phi(n) = totient = p-1*q-1
+choose e - co prime of phi
+find d where (d*e)%phi=1
+public n,e    private n,d
+
+suppose m=42 (to be cipher)
+c=m^e%n
+
+plaintext original m = c^d%n
+
+
+# Python Program for implementation of RSA Algorithm
+
+def power(base, expo, m):
+    res = 1
+    base = base % m
+    while expo > 0:
+        if expo & 1:
+            res = (res * base) % m
+        base = (base * base) % m
+        expo = expo // 2
+    return res
+
+# Function to find modular inverse of e modulo phi(n)
+# Here we are calculating phi(n) using Hit and Trial Method
+# but we can optimize it using Extended Euclidean Algorithm
+def modInverse(e, phi):
+    for d in range(2, phi):
+        if (e * d) % phi == 1:
+            return d
+    return -1
+
+# RSA Key Generation
+def generateKeys():
+    p = 7919
+    q = 1009
+    
+    n = p * q
+    phi = (p - 1) * (q - 1)
+
+    # Choose e, where 1 < e < phi(n) and gcd(e, phi(n)) == 1
+    e = 0
+    for e in range(2, phi):
+        if gcd(e, phi) == 1:
+            break
+
+    # Compute d such that e * d ≡ 1 (mod phi(n))
+    d = modInverse(e, phi)
+
+    return e, d, n
+
+# Function to calculate gcd
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+# Encrypt message using public key (e, n)
+def encrypt(m, e, n):
+    return power(m, e, n)
+
+# Decrypt message using private key (d, n)
+def decrypt(c, d, n):
+    return power(c, d, n)
+
+# Main execution
+if __name__ == "__main__":
+    
+    # Key Generation
+    e, d, n = generateKeys()
+  
+    print(f"Public Key (e, n): ({e}, {n})")
+    print(f"Private Key (d, n): ({d}, {n})")
+
+    # Message
+    M = 123
+    print(f"Original Message: {M}")
+
+    # Encrypt the message
+    C = encrypt(M, e, n)
+    print(f"Encrypted Message: {C}")
+
+    # Decrypt the message
+    decrypted = decrypt(C, d, n)
+    print(f"Decrypted Message: {decrypted}")
+
+
+
+
+PROCEDURE (PYTHON CODE):
+# Python for RSA asymmetric cryptographic algorithm.
+# For demonstration, values are
+# relatively small compared to practical application
+import math
+
+def gcd(a, h):
+ temp = 0
+ while(1):
+  temp = a % h
+  if (temp == 0):
+   return h
+  a = h
+  h = temp
+
+p = 3
+q = 7
+n = p*q
+e = 2
+phi = (p-1)*(q-1)
+while (e < phi):
+ # e must be co-prime to phi and
+ # smaller than phi.
+ if(gcd(e, phi) == 1):
+  break
+ else:
+  e = e+1
+
+# Private key (d stands for decrypt)
+# choosing d such that it satisfies
+# d*e = 1 + k * totient
+k = 2
+d = (1 + (k*phi))/e
+# Message to be encrypted
+msg = 12.0
+print("Message data = ", msg)
+# Encryption c = (msg ^ e) % n
+c = pow(msg, e)
+c = math.fmod(c, n)
+print("Encrypted data = ", c)
+# Decryption m = (c ^ d) % n
+m = pow(c, d)
+m = math.fmod(m, n)
+print("Original Message Sent = ", m)

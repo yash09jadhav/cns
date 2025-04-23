@@ -1,0 +1,134 @@
+✅ Step-by-Step: CIDR Design for 172.16.0.0 to 172.16.3.255
+🔹 1. Identify Total IPs
+You are given:
+
+Start: 172.16.0.0
+
+End: 172.16.3.255
+That’s a total of 4 × 256 = 1024 IPs
+
+🔹 2. Find the CIDR Notation
+We need 1024 IPs.
+
+2^10 = 1024 → Need 10 bits for host
+
+That leaves 32 - 10 = 22 bits for the network prefix
+
+✅ So, the CIDR notation is:
+
+Copy
+Edit
+172.16.0.0/22
+🔹 3. IP Address Range
+With /22, the range will be:
+
+Network Address: 172.16.0.0
+
+Broadcast Address: 172.16.3.255
+
+Usable IPs: 172.16.0.1 to 172.16.3.254
+
+🔹 4. Setup Example Network (Cisco Packet Tracer)
+Devices:
+
+1 Router
+
+2 Switches
+
+4 PCs
+
+IP Plan:
+
+
+PC	IP Address	Subnet Mask	Gateway
+PC0	172.16.0.10	255.255.252.0 (/22)	172.16.0.1
+PC1	172.16.1.20	255.255.252.0 (/22)	172.16.0.1
+PC2	172.16.2.30	255.255.252.0 (/22)	172.16.0.1
+PC3	172.16.3.40	255.255.252.0 (/22)	172.16.0.1
+Router (Router0):
+
+Gig0/0: 172.16.0.1/22
+
+🧪 Test
+Use ping between PCs — all are within the /22 network so they should communicate easily if wired properly.
+
+
+
+
+
+
+🎯 Objective
+Design and simulate a network using IP block 172.16.0.0 to 172.16.3.255, which is 172.16.0.0/22. You’ll connect 4 PCs with different IPs within this block and verify communication between them.
+
+🛠 Devices Needed in Cisco Packet Tracer
+
+Device	Quantity
+Router	1
+Switch	2
+PC	4
+Copper Cables	6
+🪛 Step-by-Step Implementation
+✅ 1. Place the Devices
+Go to End Devices → PC and drag PC0 to PC3
+
+Go to Network Devices → Switch and drag 2 switches
+
+Go to Network Devices → Router and place Router0
+
+✅ 2. Connect the Devices
+
+Connection	Cable Type
+PC0 to Switch0	Copper Straight
+PC1 to Switch0	Copper Straight
+PC2 to Switch1	Copper Straight
+PC3 to Switch1	Copper Straight
+Switch0 to Router (Gig0/0)	Copper Straight
+Switch1 to Router (Gig0/1)	Copper Straight
+✅ 3. Assign IP Addresses
+🖥 PC Configuration
+Click on PC0 → Desktop → IP Configuration:
+
+
+PC	IP Address	Subnet Mask	Default Gateway
+PC0	172.16.0.10	255.255.252.0	172.16.0.1
+PC1	172.16.1.20	255.255.252.0	172.16.0.1
+PC2	172.16.2.30	255.255.252.0	172.16.0.1
+PC3	172.16.3.40	255.255.252.0	172.16.0.1
+✅ 4. Configure Router Interfaces
+Click on Router0 → Config tab → Interfaces
+
+GigabitEthernet0/0
+
+Turn ON
+
+IP: 172.16.0.1
+
+Subnet Mask: 255.255.252.0 (or /22)
+
+GigabitEthernet0/1
+
+Turn ON
+
+IP: 172.16.0.2
+
+Subnet Mask: 255.255.252.0
+
+(You can use the same subnet /22 on both interfaces, because it’s one large subnet)
+
+✅ 5. Check Communication (Ping)
+Go to PC0 → Desktop → Command Prompt, run:
+
+bash
+Copy
+Edit
+ping 172.16.1.20   (PC1)
+ping 172.16.2.30   (PC2)
+ping 172.16.3.40   (PC3)
+✅ If replies are successful → your CIDR-based network is working!
+
+🧠 What You’ve Achieved
+Used CIDR (/22) to cover 1024 IPs
+
+Configured 4 devices under a single subnet
+
+Implemented real-world IP planning and routing
