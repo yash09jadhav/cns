@@ -1,0 +1,88 @@
+Add Devices:
+
+1 PC
+
+1 Server (acts as DNS)
+
+1 Switch
+
+Connect with Copper Straight-Through cables
+
+Assign IP Addresses:
+
+PC: 192.168.1.10
+
+DNS Server: 192.168.1.1
+
+Configure DNS Server:
+
+Click on the Server → Go to Config tab
+
+Click on DNS
+
+Turn DNS On
+
+Add a Name: example.com
+
+Add the Address: 192.168.1.1
+
+Click Add
+
+Configure the PC:
+
+Go to Desktop tab → IP Configuration
+
+Set:
+
+IP Address: 192.168.1.10
+
+Subnet Mask: 255.255.255.0
+
+Default Gateway: leave blank (or 192.168.1.1)
+
+DNS Server: 192.168.1.1
+
+
+
+
+
+simulation 
+
+On the PC, go to Desktop → Command Prompt
+
+Type:
+
+bash
+Copy
+Edit
+nslookup example.com
+or
+
+bash
+Copy
+Edit
+host example.com
+(if supported in your version)
+
+✅ You should see a response like:
+
+makefile
+Copy
+Edit
+Server: 192.168.1.1
+Address: 192.168.1.1
+
+Name: example.com
+Address: 192.168.1.1
+🌐 Role of DNS in Network Communication
+📖 What DNS Does:
+DNS (Domain Name System) translates human-readable domain names (like google.com) into IP addresses (like 142.250.182.36)
+
+It's like a phonebook for the internet
+
+💡 Why It's Important:
+We remember names, not numbers
+
+DNS allows users to access websites, servers, and devices using friendly names
+
+Without DNS, we would have to type IP addresses every time
